@@ -44,33 +44,42 @@ public:
 
 	void CurrSwitch(string curr) {
 		transform(curr.begin(), curr.end(), curr.begin(), tolower);
-		if ((curr == "rub") && (GetCurr() != curr) && (GetCurr() == "eur")) {
+		if ((curr == "rub") && (GetCurr() == "eur")) {
 			SetPrice(GetPrice() * currency[EUR][RUB]);
 			SetCurr(curr);
 		};
-		if ((curr == "usd") && (GetCurr() != curr) && (GetCurr() == "eur")) {
+		if ((curr == "usd") && (GetCurr() == "eur")) {
 			SetPrice(GetPrice() * currency[EUR][USD]);
 			SetCurr(curr);
 		};
-		if ((curr == "eur") && (GetCurr() != curr) && (GetCurr() == "usd")) {
+		if ((curr == "eur") && (GetCurr() == "usd")) {
 			SetPrice(GetPrice() * currency[USD][EUR]);
 			SetCurr(curr);
 		};
-		if ((curr == "rub") && (GetCurr() != curr) && (GetCurr() == "usd")) {
+		if ((curr == "rub") && (GetCurr() == "usd")) {
 			SetPrice(GetPrice() * currency[USD][RUB]);
 			SetCurr(curr);
 		};
-		if ((curr == "eur") && (GetCurr() != curr) && (GetCurr() == "rub")) {
+		if ((curr == "eur") && (GetCurr() == "rub")) {
 			SetPrice(GetPrice() * currency[RUB][EUR]);
 			SetCurr(curr);
 		};
-		if ((curr == "usd") && (GetCurr() != curr) && (GetCurr() == "rub")) {
+		if ((curr == "usd") && (GetCurr() == "rub")) {
 			SetPrice(GetPrice() * currency[RUB][USD]);
 			SetCurr(curr);
 		};
 
 	};
 
+	void PriceComparison() {
+		cout << "USD" << "\t" << "EUR" << "\t" << "RUB" << endl;
+		CurrSwitch("usd");
+		cout << GetPrice() << "\t";
+		CurrSwitch("eur");
+		cout << GetPrice() << "\t";
+		CurrSwitch("rub");
+		cout << GetPrice() << endl;
+	};
 
 	void Print() {
 		cout << "The price of the product: " << GetPrice() << " " << GetCurr() << endl;
@@ -79,6 +88,35 @@ public:
 };
 
 int main() {
-	
+	string buff;
+	double price;
+	cout << "Print the currency (USD, EUR or RUB) and the price of the product: " << endl;
+	try {
+		cin >> buff >> price;
+		if ((buff != "usd") && (buff != "eur") && (buff != "rub")) {
+			throw 1;
+		}
+	}
+	catch (int i) {
+		cout << "Error: your input is incorrect.";
+		return 0;
+	}
+	PriceChecker product(buff, price);
+	buff = "";
+	product.Print();
+	cout << "Type the currency you want to switch to (USD, EUR or RUB): ";
+	try {
+		cin >> buff;
+		if ((buff == product.GetCurr()) || ((buff != "usd") && (buff != "eur") && (buff != "rub"))) {
+			throw 2;
+		};
+	}
+	catch (int i) {
+		cout << "Error: you typed the same currency or the input is incorrect.";
+		return 0;
+	};
+	product.CurrSwitch(buff);
+	product.Print();
+	product.PriceComparison();
 	return 0;
 }
