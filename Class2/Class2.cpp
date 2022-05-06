@@ -1,15 +1,15 @@
-﻿#define USD 0
+﻿#define USD 0			//3 макроса для визуального удобства при работе с массивом, где хранятся валюты
 #define EUR 1
 #define RUB 2
 
 #include <iostream>
 #include <string>
-#include <cctype>
+#include <cctype>		//2 библиотеки, чтобы использовать функцию изменения регистра 
 #include <algorithm>
 
 using namespace std;
 
-const double currency[3][3]{ {1, 0.9485, 67.00}, {1.0543, 1, 68.794}, {0.0149, 0.0142, 1} };
+const double currency[3][3]{ {1, 0.9485, 67.00}, {1.0543, 1, 68.794}, {0.0149, 0.0142, 1} };	//двумерный константный массив с валютами
 
 class PriceChecker {
 
@@ -21,7 +21,7 @@ private:
 public:
 
 	PriceChecker(string curr, double price) {
-		transform(curr.begin(), curr.end(), curr.begin(), tolower);
+		transform(curr.begin(), curr.end(), curr.begin(), tolower);			//как бы пользователь не ввел данные, эта команда приведет строку к нижнему регистру во избежании еботни с кодом
 		this->curr = curr;
 		this->price = price;
 	}
@@ -42,7 +42,7 @@ public:
 		this->price = price;
 	};
 
-	void CurrSwitch(string curr) {
+	void CurrSwitch(string curr) {								//небольшой спагетти код, ибо я целый день думал, как бы это сделать красивее и компактнее, но ничего лучще в голову мне не пришло, увы
 		transform(curr.begin(), curr.end(), curr.begin(), tolower);
 		if ((curr == "rub") && (GetCurr() == "eur")) {
 			SetPrice(GetPrice() * currency[EUR][RUB]);
@@ -92,13 +92,13 @@ int main() {
 	string buff;
 	double price;
 	cout << "Print the currency (USD, EUR or RUB) and the price of the product: " << endl;
-	try {
+	try {				// это исключения. советую загуглить их сначала. но принцип довольно прост. Ты просто в блок try помещаешь код, где может вылезти какая-то ошибка, в данном случае, некорректный ввод
 		cin >> buff >> price;
-		if ((buff != "usd") && (buff != "eur") && (buff != "rub")) {
-			throw 1;
+		if ((buff != "usd") && (buff != "eur") && (buff != "rub")) {		//вот здесь хочу проверить, правильно ли пользователь ввел валюту
+			throw 1;	// если пользователь долбаеб, то я "ловлю" это исключение
 		}
 	}
-	catch (int i) {
+	catch (int i) {		//если ты его поймал, то выполняется код в блоке catch. В данном случае он выводит ошибку и прекращает работу программы
 		cout << "Error: your input is incorrect.";
 		return 0;
 	}
@@ -106,7 +106,7 @@ int main() {
 	buff = "";
 	product.Print();
 	cout << "Type the currency you want to switch to (USD, EUR or RUB): ";
-	try {
+	try {				//аналогичная ситуация, только тут еще пользователь может ввести валюту, которая и так введена
 		cin >> buff;
 		if ((buff == product.GetCurr()) || ((buff != "usd") && (buff != "eur") && (buff != "rub"))) {
 			throw 2;
@@ -116,6 +116,10 @@ int main() {
 		cout << "Error: you typed the same currency or the input is incorrect.";
 		return 0;
 	};
+	//возможно ты спросишь, а нахуя это все? можно было же просто if'ами обойтись
+	//но я отвечу
+	//я еблан
+	//но в свое оправдание скажу, что здесть просто маленькая прога. Когда срок 1000+, то умение пользоваться исключениями приветствуется, тем более что я довольно примитивно их использовал, у них большой функционал
 	product.CurrSwitch(buff);
 	product.Print();
 	product.PriceComparison();
