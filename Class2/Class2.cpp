@@ -9,6 +9,8 @@
 
 using namespace std;
 
+const double currency[3][3]{ {1, 0.9485, 67.00}, {1.0543, 1, 68.794}, {0.0149, 0.0142, 1} };
+
 class PriceChecker {
 
 private:
@@ -42,9 +44,33 @@ public:
 
 	void CurrSwitch(string curr) {
 		transform(curr.begin(), curr.end(), curr.begin(), tolower);
-		
+		if ((curr == "rub") && (GetCurr() != curr) && (GetCurr() == "eur")) {
+			SetPrice(GetPrice() * currency[EUR][RUB]);
+			SetCurr(curr);
+		};
+		if ((curr == "usd") && (GetCurr() != curr) && (GetCurr() == "eur")) {
+			SetPrice(GetPrice() * currency[EUR][USD]);
+			SetCurr(curr);
+		};
+		if ((curr == "eur") && (GetCurr() != curr) && (GetCurr() == "usd")) {
+			SetPrice(GetPrice() * currency[USD][EUR]);
+			SetCurr(curr);
+		};
+		if ((curr == "rub") && (GetCurr() != curr) && (GetCurr() == "usd")) {
+			SetPrice(GetPrice() * currency[USD][RUB]);
+			SetCurr(curr);
+		};
+		if ((curr == "eur") && (GetCurr() != curr) && (GetCurr() == "rub")) {
+			SetPrice(GetPrice() * currency[RUB][EUR]);
+			SetCurr(curr);
+		};
+		if ((curr == "usd") && (GetCurr() != curr) && (GetCurr() == "rub")) {
+			SetPrice(GetPrice() * currency[RUB][USD]);
+			SetCurr(curr);
+		};
 
 	};
+
 
 	void Print() {
 		cout << "The price of the product: " << GetPrice() << " " << GetCurr() << endl;
@@ -53,7 +79,6 @@ public:
 };
 
 int main() {
-	const double curr[3][3]{ {1, 0.9485, 67.00}, {1.0543, 1, 68.794}, {0.0149, 0.0142, 1} };
 	
 	return 0;
 }
