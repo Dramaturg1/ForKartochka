@@ -88,6 +88,7 @@ public:
 };
 
 int main() {
+
 	string buff;
 	double price;
 	cout << "Print the currency (USD, EUR or RUB) and the price of the product: " << endl;
