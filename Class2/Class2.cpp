@@ -1,20 +1,59 @@
-﻿// Class2.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#define USD 0
+#define EUR 1
+#define RUB 2
 
 #include <iostream>
+#include <string>
+#include <cctype>
+#include <algorithm>
 
-int main()
-{
-    std::cout << "Hello World!\n";
+using namespace std;
+
+class PriceChecker {
+
+private:
+
+	string curr;
+	double price;
+
+public:
+
+	PriceChecker(string curr, double price) {
+		transform(curr.begin(), curr.end(), curr.begin(), tolower);
+		this->curr = curr;
+		this->price = price;
+	}
+
+	double GetPrice() {
+		return price;
+	}
+
+	string GetCurr() {
+		return curr;
+	}
+
+	void SetCurr(string curr) {
+		this->curr = curr;
+	};
+
+	void SetPrice(double price) {
+		this->price = price;
+	};
+
+	void CurrSwitch(string curr) {
+		transform(curr.begin(), curr.end(), curr.begin(), tolower);
+		
+
+	};
+
+	void Print() {
+		cout << "The price of the product: " << GetPrice() << " " << GetCurr() << endl;
+
+	};
+};
+
+int main() {
+	const double curr[3][3]{ {1, 0.9485, 67.00}, {1.0543, 1, 68.794}, {0.0149, 0.0142, 1} };
+	
+	return 0;
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
