@@ -1,30 +1,40 @@
-﻿#define PI 3.14159
+﻿/*
+Прежде чем писать мне в VK "НЕКИТА У ТИБЯ АШИПКИ В КОДЕ СОСИ!!!1!", просто поменяй
+стандарт языка с++. Как это сделать:
+Верхняя панель->Отладка->Свойства отладки для проекта Class3->C/C++->Язык->Стандарт языка С++->в всплывающем меню ставь 20й стандарт
+
+Если ты пытаешься отладить Class3, но у тебя почему-то отлаживается другой код,
+то наведи курсор на нужный проект, ПКМ, назначить в качестве запускаемого проекта
+*/
+
+#define PI 3.14159          //дериктива препроцессора define. Если кратко, то когда компилятор встречает PI, то он просто вместо PI подставляет значение справа
+                            //имена в define пишутся ВСЕГДА КАПСОМ
 
 #include <iostream>
-#include <tuple>
-#include <cmath>
-#include <limits>
+#include <tuple>            //библиотека, позволяющая функции выводить несколько значений
+#include <cmath>            //библиотека, чтобы юзать тригоноиетрию и всякие другие математические штуковины
+#include <limits>           //библиотека для использования методов, позволяющих получить максимальное значение диапазона какого-либо типа (ну например int или double) 
 
 using namespace std;
-
+// Создаем класс Point
 class Point {
 
 private:
 
-    int x, y;
+    int x, y;               //поля класса (координаты точки)
 
 public:
 
-    void Set(int x, int y) {
-        this->x = x;
-        this->y = y;
+    void Set(int x, int y) {    //сеттер класса Point
+        this->x = x;            //служебное слово this-> нужно, чтобы обратиться к полям ЭТОГО класса
+        this->y = y;            //здесь я его использовал, т.к. в функцию передаются аргументы, одноименные с полями класса, т. е. для избежания конфликта имен переменных
     };
 
-    int GetX() {
+    int GetX() {                //геттер для икса
         return x;
     };
 
-    int GetY() {
+    int GetY() {                //геттер для игрика
         return y;
     };
 
@@ -34,21 +44,21 @@ class RectangularTriangle {
 
 private:
 
-    Point point1;
-    Point point2;
+    Point point1;               //создаем три поля типа Point
+    Point point2;               //таким образом у нас получается класс в классе, но ничего страшного нет, это удобно
     Point point3;
     int count;
 
 public:
 
-    void Set(int x1, int y1, int x2, int y2, int x3, int y3, int count) {
+    void Set(int x1, int y1, int x2, int y2, int x3, int y3, int count) {       //сеттер для класса RectangularTriangle
         point1.Set(x1, y1);
         point2.Set(x2, y2);
         point3.Set(x3, y3);
         this->count = count;
     };
 
-    tuple<double, double, double> GetLength() {
+    tuple<double, double, double> GetLength() {                                 //метод для получения длин сторон треугольника. принцип работы класса tuple загугли
         double a, b, c;
         a = round((sqrt(pow(point2.GetX() - point1.GetX(), 2) + pow(point2.GetY() - point1.GetY(), 2))) * 100) / 100;
         b = round((sqrt(pow(point3.GetX() - point2.GetX(), 2) + pow(point3.GetY() - point2.GetY(), 2))) * 100) / 100;
@@ -56,7 +66,7 @@ public:
         return { a, b, c };
     };
 
-    bool Existance() {
+    bool Existance() {                              //метод проверки существования треугольника
         auto [a, b, c] = GetLength();
         if ((a + b > c) && (a + c > b) && (b + c > a)) {
             return true;
@@ -66,7 +76,7 @@ public:
         }
     };
 
-    bool IsRect() {
+    bool IsRect() {                                 //метод проверки на ортогональность
         if (Existance() == true) {
             auto [A, B, C] = Angle();
             if ((A == 90) || (B == 90) || (C == 90)) {
@@ -78,7 +88,7 @@ public:
         };
     };
 
-    double Perimeter() {
+    double Perimeter() {                        //без комментариев
         if (Existance() == true) {
             auto [a, b, c] = GetLength();
             return round((a + b + c) * 100) / 100;
@@ -88,7 +98,7 @@ public:
         };
     };
 
-    double Square() {
+    double Square() {                           //считаем площадб через формулу Герона
         if (Existance() == true) {
             auto [a, b, c] = GetLength();
             int p = Perimeter() / 2;
@@ -99,7 +109,7 @@ public:
         }
     };
 
-    tuple<double, double, double> Angle() {
+    tuple<double, double, double> Angle() {     //считаем углы по формуле косинусов
         if (Existance() == true) {
             auto [a, b, c] = GetLength();
             double angleA, angleB, angleC;
@@ -113,8 +123,8 @@ public:
         };
 
     };
-
-    void Print() {
+        
+    void Print() {                              //выводим инфу
         cout << "The first point: (" << point1.GetX() << "," << point1.GetY() << ")" << endl;
         cout << "The second point: (" << point2.GetX() << "," << point2.GetY() << ")" << endl;
         cout << "The third point: (" << point3.GetX() << "," << point3.GetY() << ")" << endl;
@@ -135,7 +145,7 @@ public:
 };
 
 int main() {
-    RectangularTriangle triangle[100];
+    RectangularTriangle triangle[100];                      //заводим массив классов. Заводим сразу на 100, ибо мы не знаем, сколько треугольников введет пользователь. Пустые элементы массива просто останутся неинициализированными. Можно было динамический массив сделать, но опять же, мне впадлу и ТЗ этого не просило
     cout << "How many triangles do you want to input?" << endl;
     int N;
     cin >> N;
@@ -151,7 +161,7 @@ int main() {
 
     long double maxS, minS;
     maxS = -1;
-    minS = numeric_limits<long double>::max();
+    minS = numeric_limits<long double>::max();              //та самая функция для получения максимального значения диапазона
     for (int i = 0; i < N; i++) {
         if ((triangle[i].Existance() == true) && (triangle[i].IsRect() == true)) {
             if (triangle[i].Square() > maxS) {
