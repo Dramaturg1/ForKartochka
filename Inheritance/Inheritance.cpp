@@ -73,6 +73,30 @@ public:
 	}
 };
 
+void SquareInit(Square sq[], const int size) {
+	cout << "Type square length: " << endl;
+
+	for (int i = 0; i < size; i++) {
+		double buff;
+		cin >> buff;
+		sq[i].SetSquare(buff);
+		sq[i].Print();
+		cout << endl << endl;
+	};
+}
+
+void PrismInit(SquarePrism pr[], const int size) {
+	cout << "Type prism length and height: " << endl;
+
+	for (int i = 0; i < size; i++) {
+		double buff1, buff2;
+		cin >> buff1 >> buff2;
+		pr[i].SetSquarePrism(buff1, buff2);
+		pr[i].Print();
+		cout << endl << endl;
+	}
+}
+
 pair<int, int>MaxSqDia(Square sq[], const int size1, SquarePrism pr[], const int size2) {
 	int value1, value2;
 	double max1 = 0;
@@ -98,30 +122,14 @@ int main() {
 	const int s2 = 2;
 
 	Square square[s1];
+	SquareInit(square, s1);
+
 	SquarePrism prism[s2];
-
-	cout << "Type square length: " << endl;
-
-	for (int i = 0; i < s1; i++) {
-		double buff;
-		cin >> buff;
-		square[i].SetSquare(buff);
-		square[i].Print();
-		cout << endl << endl;
-	}
-
-	cout << "Type prism length and height: " << endl;
-
-	for (int i = 0; i < s2; i++) {
-		double buff1, buff2;
-		cin >> buff1 >> buff2;
-		prism[i].SetSquarePrism(buff1, buff2);
-		prism[i].Print();
-		cout << endl << endl;
-	}
+	PrismInit(prism, s2);
 
 	auto[m1, m2] = MaxSqDia(square, s1, prism, s2);
 	cout << "Maximum square area: " << square[m1].Sq() << endl;
 	cout << "Maximum prism diagonal: " << prism[m2].Diagonal() << endl;
+
 	return 0;
 };
