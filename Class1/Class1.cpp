@@ -43,7 +43,7 @@ public:
     };
 
     void Print() {                                          //вывод информации
-        cout << "THe animal type: " << name << endl;
+        cout << "The animal type: " << name << endl;
         cout << "The cage number: " << cage_num << endl;
         cout << name << "'s favourite food: " << fav_food << endl;
         cout << "Is the animal fed? " << satiety << endl;
@@ -91,6 +91,7 @@ public:
     };
 };
 
+
 int main() {
     Zoo zoo(12, "10.00 - 20.00", "Abbey road 75", "Johnson");   //инициализируем класс объект класса Zoo через конуструктор (можно сделать это посредством ввода в консоль, но мне впадлу, да и ТЗ этого не требует)
     zoo.Print();
@@ -108,5 +109,6 @@ int main() {
         zoo.SwitchKeeper(ans);
     };
     zoo.Print();
+
     return 0;
 }
