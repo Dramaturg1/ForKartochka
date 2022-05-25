@@ -83,7 +83,6 @@ public:
 
 	void Print() {
 		cout << "The price of the product: " << GetPrice() << " " << GetCurr() << endl;
-
 	};
 };
 

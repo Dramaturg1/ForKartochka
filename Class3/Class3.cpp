@@ -159,32 +159,32 @@ int main() {
         cout << endl;
     };
 
-    long double maxS, minS;
+    long double maxS, minS, minI, maxI;
+    minI = 0;
+    maxI = 0;
     maxS = -1;
     minS = numeric_limits<long double>::max();              //та самая функция для получения максимального значения диапазона
     for (int i = 0; i < N; i++) {
         if ((triangle[i].Existance() == true) && (triangle[i].IsRect() == true)) {
             if (triangle[i].Square() > maxS) {
-                maxS = i;
+                maxS = triangle[i].Square();
+                maxI = i;
             };
             if (triangle[i].Square() < minS) {
-                minS = i;
+                minS = triangle[i].Square();
+                minI = i;
             };
         };
     };
 
     for (int i = 0; i < N; i++) {
-        if (i == maxS) {
+        if (i == maxI) {
             cout << "Maximum square has a triangle with number " << i << ": " << triangle[i].Square() << endl;
         };
-        if (i == minS) {
+        if (i == minI) {
             cout << "Minimum square has a triangle with mumber " << i << ": " << triangle[i].Square() << endl;
         };
     };
-
-    for (int i = 1; i < 10; i++) {
-        
-    }
 
     return 0;
 }
