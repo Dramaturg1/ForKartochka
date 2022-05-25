@@ -169,8 +169,7 @@ int main() {
             if (triangle[i].Square() > maxS) {
                 maxS = triangle[i].Square();
                 maxI = i;
-            };
-            if (triangle[i].Square() < minS) {
+            } else if (triangle[i].Square() < minS) {
                 minS = triangle[i].Square();
                 minI = i;
             };
