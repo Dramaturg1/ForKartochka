@@ -97,6 +97,7 @@ int main() {
 	product.Print();
 	cout << "Type the currency you want to switch to (USD, EUR or RUB): ";
 	cin >> buff;
+	product.CurrSwitch(buff);
 	product.Print();
 	product.PriceComparison();
 	return 0;
